@@ -1,0 +1,61 @@
+import sys
+from collections import deque
+
+input = sys.stdin.readline
+t = int(input())
+
+numbers = [
+  [True,True,True,
+   False,
+   True,True,True],
+  [False,False,True,
+   False,
+   False,False,True],
+    [False,True,True,
+   True,
+   True,True,False],
+  [False,True,True,
+   True,
+   False,True,True],
+  [True,False,True,
+   True,
+   False,False,True],
+  [True,True,False,
+   True,
+   False,True,True],
+  [True,True,False,
+   True,
+   True,True,True],
+  [True,True,True,
+   False,
+   False,False,True],
+  [True,True,True,
+   True,
+   True,True,True],
+  [True,True,True,
+   True,
+   False,True,True],
+  [False,False,False,
+   False,
+   False,False,False],
+]
+x = 0
+y = 0
+for i in range(t):
+  x,y = map(str,input().split())
+  xq = deque(list(map(int,x)))
+  yq = deque(list(map(int,y)))
+  if len(xq) < len(yq):
+    for j in range(len(yq)-len(xq)):
+      xq.appendleft(10)
+  elif len(x) > len(y):
+    for j in range(len(xq)-len(yq)):
+      yq.appendleft(10)
+  cnt = 0
+  while xq:
+    x = xq.popleft()
+    y = yq.popleft()
+    for before,after in zip(numbers[x],numbers[y]):
+      if before != after:
+        cnt+=1
+  print(cnt)
